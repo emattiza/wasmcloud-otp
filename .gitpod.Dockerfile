@@ -29,3 +29,7 @@ RUN echo "PATH="${PATH}"" | sudo tee /etc/environment
 RUN rustup target add wasm32-unknown-unknown
 
 USER gitpod
+
+# Go ahead and install hex and rebar for building the phoenix apps
+RUN mix local.hex --force
+RUN mix local.rebar --force
