@@ -1,6 +1,7 @@
 FROM gitpod/workspace-base
 USER root
 
+# Elixir 
 RUN wget https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb \
     && sudo dpkg -i erlang-solutions_2.0_all.deb \
     && apt update \
@@ -10,6 +11,7 @@ RUN wget https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb \
         elixir
 
 
+# Rust
 RUN curl -s https://packagecloud.io/install/repositories/wasmcloud/core/script.deb.sh | bash && \
     apt update && \
     install-packages wash zsh inotify-tools
@@ -27,6 +29,18 @@ ENV PATH=$PATH:$HOME/.cargo/bin
 # share env see https://github.com/gitpod-io/workspace-images/issues/472
 RUN echo "PATH="${PATH}"" | sudo tee /etc/environment
 RUN rustup target add wasm32-unknown-unknown
+
+# Node
+RUN curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | PROFILE=/dev/null bash \
+    && bash -c ". .nvm/nvm.sh \
+        && nvm install v16 \
+        && nvm alias default v16 \
+        && npm install -g typescript yarn pnpm node-gyp" \
+    && echo ". ~/.nvm/nvm-lazy.sh"  >> /home/gitpod/.bashrc.d/50-node
+# above, we are adding the lazy nvm init to .bashrc, because one is executed on interactive shells, the other for non-interactive shells (e.g. plugin-host)
+COPY --chown=gitpod:gitpod nvm-lazy.sh /home/gitpod/.nvm/nvm-lazy.sh
+ENV PATH=/home/gitpod/.nvm/versions/node/v16/bin:$PATH
+
 
 USER gitpod
 

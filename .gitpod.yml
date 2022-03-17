@@ -1,9 +1,21 @@
+tasks:
+  - name: run wasmcloud_host
+    init: cd wasmcloud_host && make build
+    command: cd wasmcloud_host && make run
+  - name: run host_core
+    init: cd host_core && make build
+    command: cd host_core && make run
+
 image:
   file: .gitpod.Dockerfile
-
+  
 github:
   prebuilds:
     addBadge: true
     branches: true
     master: true
     pullRequests: true
+
+vscode:
+  extensions:
+    - "elixir-lsp.elixir-ls"
