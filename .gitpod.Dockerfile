@@ -1,4 +1,4 @@
-FROM gitpod/gitpod/workspace-base
+FROM gitpod/workspace-base
 USER root
 
 RUN wget https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb \
