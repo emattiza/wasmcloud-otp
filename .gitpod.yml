@@ -1,0 +1,9 @@
+image:
+  file: .gitpod.Dockerfile
+
+github:
+  prebuilds:
+    addBadge: true
+    branches: true
+    master: true
+    pullRequests: true
