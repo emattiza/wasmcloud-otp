@@ -1,10 +1,13 @@
 tasks:
   - name: run wasmcloud_host
     init: cd wasmcloud_host && make build
-    command: cd wasmcloud_host && make run
+    command: make run
   - name: run host_core
     init: cd host_core && make build
-    command: cd host_core && make run
+    command: make run
+  - name: run local nats
+    init: docker-compose -f .gitpod/docker-compose.yml pull
+    command: docker-compose -f .gitpod/docker-compose.yml up
 
 image:
   file: .gitpod.Dockerfile
