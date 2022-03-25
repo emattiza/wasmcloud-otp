@@ -47,3 +47,4 @@ USER gitpod
 # Go ahead and install hex and rebar for building the phoenix apps
 RUN mix local.hex --force
 RUN mix local.rebar --force
+RUN nvm use --lts
